@@ -1,11 +1,8 @@
 package com.example.todoappch8
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class TodoViewModel : ViewModel() {
     // _tasks is private — only this class can modify it
@@ -19,18 +16,34 @@ class TodoViewModel : ViewModel() {
     //Counter used to generate a unique ID for each new task
     private var _nextId = 1
 
+    companion object {
+        private const val TAG = "TodoViewModel"
+    }
+
     // challenge create the function addTask() here
     //Adds a new Task to the list
     // Does nothing if the title is blank (empty or only whitespace)
     fun addTask(title: String) {
         if (title.isNotBlank()) {
                 _tasks.add(Task(id = _nextId++, title = title.trim()))
+            Log.d(TAG, "Task added: $title")
             }
+        else{
+            Log.w(TAG, "addTask() called with blanc title- task  was ignore")
+        }
     }
 
     //Removes a task from the list by its Id
     fun removeTask(taskId: Int) {
-        _tasks.removeAll { it.id == taskId }
+        val taskToRemove = _tasks.find { it.id == taskId }
+        if (taskToRemove != null){
+            _tasks.removeAll { it.id == taskId }
+            Log.d(TAG, "Task removed:" + taskToRemove.title)
+        }else{
+            Log.w(TAG, "Remove task () called with id= " + taskId + "- task was not found")
+        }
+
+
     }
 
     //Returns the number of tasks in the list
