@@ -33,20 +33,21 @@ class TodoViewModel : ViewModel() {
 
 
         }
-
-        //Returns the number of tasks in the list
-        //Used in Unit test to verify task were added correctly
-        fun getTaskCount(): Int = _tasks.size
-
-        // Returns true if a task with the given title exist in the list
-        //Used in unittest to verify the correct task was added
-
-        fun containsTask(title: String): Boolean {
-            return _tasks.any { it.title == title }
-        }
-
     }
+
+    //Returns the number of tasks in the list
+    //Used in Unit test to verify task were added correctly
+    fun getTaskCount(): Int = _tasks.size
+
+    // Returns true if a task with the given title exist in the list
+    //Used in unittest to verify the correct task was added
+
+    fun containsTask(title: String): Boolean {
+        return _tasks.any { it.title == title }
+    }
+
 }
+
 
 
 
