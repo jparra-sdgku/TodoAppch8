@@ -24,16 +24,8 @@ class TodoViewModel : ViewModel() {
     // Does nothing if the title is blank (empty or only whitespace)
     fun addTask(title: String) {
         if (title.isNotBlank()) {
-
-            // viewModelScope.launch start a new coroutine in the non-blocking way
-            //Everything inside this coroutine will be executed in a separate thread
-            viewModelScope.launch {
-                withContext(Dispatchers.IO) {
-                    simulatesSlowOperation() // this block the UI thread for 5 seconds
-                }
                 _tasks.add(Task(id = _nextId++, title = title.trim()))
             }
-        }
     }
 
     //Removes a task from the list by its Id

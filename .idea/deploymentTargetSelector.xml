@@ -6,10 +6,6 @@
         <option name="selectionMode" value="DROPDOWN" />
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="addTask_userTypesAndClicksAdd_taskAppearsInList()">
-        <option name="selectionMode" value="DROPDOWN" />
-        <DialogSelection />
-      </SelectionState>
       <SelectionState runConfigName="addTask_inputField_ClearsAfterAdding()">
         <option name="selectionMode" value="DROPDOWN" />
         <DialogSelection />
