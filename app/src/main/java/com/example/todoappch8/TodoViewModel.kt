@@ -2,6 +2,10 @@ package com.example.todoappch8
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class TodoViewModel : ViewModel() {
     // _tasks is private — only this class can modify it
@@ -20,7 +24,15 @@ class TodoViewModel : ViewModel() {
     // Does nothing if the title is blank (empty or only whitespace)
     fun addTask(title: String) {
         if (title.isNotBlank()) {
-            _tasks.add(Task(id = _nextId++, title = title.trim()))
+
+            // viewModelScope.launch start a new coroutine in the non-blocking way
+            //Everything inside this coroutine will be executed in a separate thread
+            viewModelScope.launch {
+                withContext(Dispatchers.IO) {
+                    simulatesSlowOperation() // this block the UI thread for 5 seconds
+                }
+                _tasks.add(Task(id = _nextId++, title = title.trim()))
+            }
         }
     }
 
@@ -36,8 +48,13 @@ class TodoViewModel : ViewModel() {
     // Returns true if a task with the given title exist in the list
     //Used in unittest to verify the correct task was added
 
-    fun containsTask(title: String) : Boolean {
+    fun containsTask(title: String): Boolean {
         return _tasks.any { it.title == title }
+    }
+
+    //This simulates a slow operation running on the main Thread
+    private fun simulatesSlowOperation() {
+        Thread.sleep(5000)
     }
 }
 
